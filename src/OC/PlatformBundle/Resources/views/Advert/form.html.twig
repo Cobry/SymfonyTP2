@@ -1,0 +1,49 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/form.html.twig #}
+
+{# Cette vue n'hérite de personne, elle sera incluse par d'autres vues qui,
+   elles, hériteront probablement du layout. Je dis « probablement » car,
+   ici pour cette vue, on n'en sait rien et c'est une info qui ne nous concerne pas. #}
+
+<h3>Formulaire d'annonce</h3>
+
+{# On laisse vide la vue pour l'instant, on la comblera plus tard
+   lorsqu'on saura afficher un formulaire. #}
+<div class="well">
+  {{ form_start(formulaire, {'attr': {'class':'form-horizontal'}}) }}
+
+  {{ form_errors(formulaire) }}
+
+  {{ form_row(formulaire.date) }}
+
+  <div class="form-group">
+    {{ form_label(formulaire.title, "Titre", {'label_attr': {'class':'col-sm-2 control-label'}})}}
+
+    {{ form_errors(formulaire.title) }}
+
+    <div class="col-sm-10">
+      {{ form_widget(formulaire.title, {'attr': {'class':'form-control'}}) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(formulaire.content, "Contenu", {'label_attr':{'class':'col-sm-2 control-label'}}) }}
+
+    {{ form_errors(formulaire.content) }}
+
+    <div class="col-sm-10">
+      {{ form_widget(formulaire.content, {'attr': {'class':'form-control'}}) }}
+    </div>
+  </div>
+
+  {{ form_row(formulaire.author) }}
+
+  {{ form_row(formulaire.published) }}
+
+  {{ form_row(formulaire.image) }}
+
+  {{ form_widget(formulaire.save, {'attr': {'class':'btn btn-primary'}}) }}
+
+  {{ form_rest(formulaire) }}
+
+  {{ form_end(formulaire) }}
+</div>
