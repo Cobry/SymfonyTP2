@@ -5,6 +5,7 @@
 namespace OC\PlatformBundle\Controller;
 
 use OC\PlatformBundle\Entity\Advert;
+use OC\PlatformBundle\Form\AdvertEditType;
 use OC\PlatformBundle\Form\AdvertType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
@@ -117,20 +118,24 @@ class AdvertController extends Controller
       throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
     }
 
-    // Ici encore, il faudra mettre la gestion du formulaire
+    $form = $this->createForm(AdvertEditType::class, $advert);
 
-    if ($request->isMethod('POST')) {
-      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid())
+    {
+        $em->flush();
 
-      return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+        $request->getSession()->getFlashBag()->add('notice', 'Annonce bien modifiée.');
+
+        return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
     }
 
     return $this->render('OCPlatformBundle:Advert:edit.html.twig', array(
-      'advert' => $advert
+        'advert' => $advert,
+        'formulaire' => $form->createView()
     ));
   }
 
-  public function deleteAction($id)
+  public function deleteAction($id, Request $request)
   {
     $em = $this->getDoctrine()->getManager();
 
@@ -140,14 +145,21 @@ class AdvertController extends Controller
       throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
     }
 
-    // On boucle sur les catégories de l'annonce pour les supprimer
-    foreach ($advert->getCategories() as $category) {
-      $advert->removeCategory($category);
+    $form = $this->get('form.factory')->create();
+
+    if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
+        $em->remove($advert);
+        $em->flush();
+
+        $request->getSession()->getFlashBag()->add('notice',"L'annonce a bien été supprimé");
+
+        return $this->redirectToRoute("oc_platform_home");
     }
 
-    $em->flush();
-    
-    return $this->render('OCPlatformBundle:Advert:delete.html.twig');
+    return $this->render('OCPlatformBundle:Advert:delete.html.twig', array(
+        'advert' => $advert,
+        'form' => $form->createView()
+    ));
   }
 
   public function menuAction($limit)

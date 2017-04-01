@@ -64,10 +64,10 @@ class Image extends \OC\PlatformBundle\Entity\Image implements \Doctrine\ORM\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'id', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'url', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'alt'];
+            return ['__isInitialized__', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'id', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'url', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'alt', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'file', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'tempFileName'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'id', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'url', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'alt'];
+        return ['__isInitialized__', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'id', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'url', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'alt', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'file', '' . "\0" . 'OC\\PlatformBundle\\Entity\\Image' . "\0" . 'tempFileName'];
     }
 
     /**
@@ -230,6 +230,105 @@ class Image extends \OC\PlatformBundle\Entity\Image implements \Doctrine\ORM\Pro
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAlt', []);
 
         return parent::getAlt();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setFile(\Symfony\Component\HttpFoundation\File\UploadedFile $file)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFile', [$file]);
+
+        return parent::setFile($file);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFile()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFile', []);
+
+        return parent::getFile();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function preUpload()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpload', []);
+
+        return parent::preUpload();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function upload()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'upload', []);
+
+        return parent::upload();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function preRemoveUpload()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preRemoveUpload', []);
+
+        return parent::preRemoveUpload();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeUpload()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeUpload', []);
+
+        return parent::removeUpload();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUploadDir()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUploadDir', []);
+
+        return parent::getUploadDir();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUploadRootDir()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUploadRootDir', []);
+
+        return parent::getUploadRootDir();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getWebPath()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWebPath', []);
+
+        return parent::getWebPath();
     }
 
 }

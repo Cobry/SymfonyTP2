@@ -13,18 +13,31 @@
 
   {{ form_errors(formulaire) }}
 
-  {{ form_row(formulaire.date) }}
+{#DATE#}
+  {% if formulaire.date is defined %}
+      <div class="form-group">
+          {{ form_label(formulaire.date,"Date", {'label_attr': {'class':'col-sm-2 control-label'}}) }}
 
+          {{ form_errors(formulaire.date) }}
+
+          <div class="col-sm-10">
+              {{ form_widget(formulaire.date, {'attr':{'class':'form-inline'}}) }}
+          </div>
+      </div>
+  {% endif %}
+
+{# TITRE#}
   <div class="form-group">
     {{ form_label(formulaire.title, "Titre", {'label_attr': {'class':'col-sm-2 control-label'}})}}
 
     {{ form_errors(formulaire.title) }}
 
-    <div class="col-sm-10">
+    <div class="col-sm-5">
       {{ form_widget(formulaire.title, {'attr': {'class':'form-control'}}) }}
     </div>
   </div>
 
+{#CONTENU#}
   <div class="form-group">
     {{ form_label(formulaire.content, "Contenu", {'label_attr':{'class':'col-sm-2 control-label'}}) }}
 
@@ -35,11 +48,35 @@
     </div>
   </div>
 
-  {{ form_row(formulaire.author) }}
+{#AUTHOR#}
+    <div class="form-group">
+        {{ form_label(formulaire.author, "Auteur", {'label_attr':{'class':'col-sm-2 control-label'}}) }}
 
-  {{ form_row(formulaire.published) }}
+        {{ form_errors(formulaire.author) }}
+
+        <div class="col-sm-5">
+            {{ form_widget(formulaire.author, {'attr': {'class':'form-control'}}) }}
+        </div>
+    </div>
+
+{#PUBLISHED#}
+  {% if formulaire.published is defined %}
+      <div class="form-group">
+          {{ form_label(formulaire.published, "Publié", {'label_attr':{'class':'col-sm-2 form-check-label'}}) }}
+
+          {{ form_errors(formulaire.published) }}
+
+          <div class="col-sm-5">
+              {{ form_widget(formulaire.published, {'attr': {'class':'form-check-input'}}) }}
+          </div>
+      </div>
+  {% endif %}
 
   {{ form_row(formulaire.image) }}
+
+{#CATEGORIES#}
+    {{ form_row(formulaire.categories) }}
+    <a href="#" id="add_category" class="btn btn-default">Ajouter</a><br/>
 
   {{ form_widget(formulaire.save, {'attr': {'class':'btn btn-primary'}}) }}
 
@@ -47,3 +84,58 @@
 
   {{ form_end(formulaire) }}
 </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      var $container = $('div#advert_categories');
+
+      var index = $container.find(':input').length;
+
+      $('#add_category').click(function(e){
+          addCategory($container);
+
+          e.preventDefault();
+
+          return false;
+      });
+
+      if (index ==0){
+          addCategory($container);
+      }else{
+          $container.children('div').each(function(){
+              addDeleteLink($(this));
+          })
+      }
+
+      function addCategory($container){
+          var template = $container.attr('data-prototype')
+              .replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+              .replace(/__name__/g, index)
+          ;
+
+          var $prototype = $(template);
+
+          addDeleteLink($prototype);
+
+          $container.append($prototype);
+
+          index++;
+      }
+
+      function addDeleteLink($prototype){
+          var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+          $prototype.append($deleteLink);
+
+          $deleteLink.click(function (e) {
+              $prototype.remove();
+
+              e.preventDefault();
+
+              return false;
+          });
+      }
+  });
+</script>
